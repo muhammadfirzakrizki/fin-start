@@ -18,7 +18,26 @@ export const Route = createRootRoute({
     ],
   }),
   shellComponent: RootDocument,
+  notFoundComponent: NotFoundComponent,
 })
+
+function NotFoundComponent() {
+  return (
+    <div className="w-full flex-1 flex flex-col items-center justify-center py-32 animate-in fade-in zoom-in duration-500">
+      <div className="relative mb-8">
+        <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full"></div>
+        <div className="text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-emerald-400 to-teal-800 leading-none select-none relative z-10 drop-shadow-2xl">
+          404
+        </div>
+      </div>
+      <h2 className="text-4xl font-bold text-white mb-4 tracking-tight">Lost in the Matrix</h2>
+      <p className="text-gray-400 mb-10 max-w-md text-center text-lg">We couldn't find the page you're looking for. It might have been moved or simply doesn't exist.</p>
+      <Link to="/dashboard" className="btn bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black border-none rounded-full h-14 px-10 text-lg font-bold shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition-all hover:scale-105">
+        Back to Dashboard
+      </Link>
+    </div>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = React.useState(false)
