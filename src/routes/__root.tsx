@@ -77,21 +77,26 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
 
-              <div className="flex-none gap-3 items-center">
+              <div className="flex flex-none items-center gap-4">
                 
                 {/* Visual indicator for background fetching */}
-                <div className={`flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold transition-all duration-300 ${isFetching ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
+                <div className={`flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold transition-all duration-300 ${isFetching ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 w-0 overflow-hidden px-0 border-none'}`}>
                   <Loader2 className="w-3 h-3 animate-spin" />
-                  <span>Syncing...</span>
+                  <span className="whitespace-nowrap">Syncing...</span>
                 </div>
 
-                <button className="btn btn-circle btn-ghost btn-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
-                  <Bell className="w-5 h-5" />
-                </button>
-                <button className="btn btn-circle btn-ghost btn-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
-                  <Settings className="w-5 h-5" />
-                </button>
-                <div className="avatar placeholder ml-2 cursor-pointer ring-2 ring-transparent hover:ring-emerald-500/50 transition-all rounded-full shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]">
+                <div className="flex items-center gap-2">
+                  <button className="btn btn-circle btn-ghost btn-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                    <Bell className="w-5 h-5" />
+                  </button>
+                  <button className="btn btn-circle btn-ghost btn-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                    <Settings className="w-5 h-5" />
+                  </button>
+                </div>
+                
+                <div className="w-[1px] h-6 bg-white/10 mx-1"></div>
+
+                <div className="avatar placeholder cursor-pointer ring-2 ring-transparent hover:ring-emerald-500/50 transition-all rounded-full shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.4)]">
                   <div className="bg-gradient-to-tr from-emerald-600 to-teal-400 text-white rounded-full w-10 h-10 flex items-center justify-center">
                     <span className="text-sm font-bold">MR</span>
                   </div>
