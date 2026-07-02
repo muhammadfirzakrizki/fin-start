@@ -19,6 +19,11 @@ const config = defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  server: {
+    watch: {
+      ignored: ['**/db.json'],
+    },
+  },
 })
 
 export default config

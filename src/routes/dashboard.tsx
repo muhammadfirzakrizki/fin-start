@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 import { mockTransactions } from '../server/mockDb'
 import { ArrowUpRight, ArrowDownRight, TrendingUp, Activity, Wallet, MoreHorizontal } from 'lucide-react'
+import { BalanceChart } from '../components/dashboard/BalanceChart'
 
 const getDashboardSummary = createServerFn({ method: 'GET' })
   .handler(async () => {
@@ -60,9 +61,7 @@ function DashboardComponent() {
           <h1 className="text-4xl font-bold text-white tracking-tight mb-2">Welcome back, Muhammad Firzak Rizki</h1>
           <p className="text-gray-400">Here's what's happening with your finances today.</p>
         </div>
-        <button className="btn bg-white text-black hover:bg-gray-200 border-none rounded-full px-6 shadow-[0_0_20px_rgba(255,255,255,0.15)] transition-all hover:scale-105 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)]">
-          <ArrowUpRight className="w-4 h-4 mr-1" /> Transfer Funds
-        </button>
+
       </div>
       
       {/* Premium Stat Cards */}
@@ -78,7 +77,7 @@ function DashboardComponent() {
                 <Wallet className="w-4 h-4" />
                 <span className="font-medium tracking-wide text-xs uppercase">Total Balance</span>
               </div>
-              <MoreHorizontal className="w-6 h-6 cursor-pointer hover:text-white transition-colors" />
+
             </div>
             <div>
               <div className="text-5xl md:text-6xl font-black text-white tracking-tighter mb-4 drop-shadow-md flex items-baseline">
@@ -114,11 +113,20 @@ function DashboardComponent() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-white">Balance Overview</h3>
+          </div>
+          <div className="bg-[#0f1115] border border-white/5 rounded-[2rem] p-6 shadow-xl relative h-[400px]">
+            <BalanceChart />
+          </div>
+        </div>
+
+        <div>
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-white">Recent Transactions</h3>
-            <button className="text-sm font-semibold text-emerald-500 hover:text-emerald-400 transition-colors">View All</button>
+            <Link to="/transactions" className="text-sm font-semibold text-emerald-500 hover:text-emerald-400 transition-colors">View All</Link>
           </div>
           
           <div className="bg-[#0f1115] border border-white/5 rounded-[2rem] overflow-hidden shadow-xl p-2">
@@ -141,33 +149,6 @@ function DashboardComponent() {
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-xl font-bold text-white mb-6">Quick Transfer</h3>
-          <div className="bg-[#0f1115] border border-white/5 rounded-[2rem] p-8 shadow-xl relative overflow-hidden">
-            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl"></div>
-            
-            <div className="flex gap-4 mb-8 overflow-x-auto pb-2 scrollbar-hide relative z-10">
-               {['Sarah', 'Mike', 'Emma', 'John'].map((name, i) => (
-                 <div key={i} className="flex flex-col items-center gap-2 cursor-pointer group">
-                   <div className="w-14 h-14 rounded-full bg-gray-900 border border-white/10 flex items-center justify-center text-sm font-bold text-gray-300 group-hover:bg-gradient-to-tr group-hover:from-emerald-500 group-hover:to-teal-400 group-hover:text-white group-hover:border-transparent transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.4)]">
-                     {name[0]}
-                   </div>
-                   <span className="text-xs text-gray-500 group-hover:text-gray-300 font-medium transition-colors">{name}</span>
-                 </div>
-               ))}
-            </div>
-            
-            <div className="relative z-10 mb-6">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-lg">Rp</span>
-              <input type="text" placeholder="0" className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-14 pr-4 text-2xl font-bold text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner" />
-            </div>
-            
-            <button className="btn w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black border-none rounded-2xl h-14 text-lg font-bold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transition-all hover:scale-[1.02] relative z-10">
-              Send Money
-            </button>
           </div>
         </div>
       </div>

@@ -1,4 +1,10 @@
-Welcome to your new TanStack Start app! 
+# 💰 fin-start - Personal Finance App
+
+A modern personal finance management application built with:
+- **Framework:** TanStack Start (Nitro + React)
+- **UI:** React 19, Tailwind CSS v4, DaisyUI v5
+- **Charts:** ApexCharts
+- **Routing:** TanStack Router
 
 # Getting Started
 

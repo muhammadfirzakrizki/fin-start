@@ -1,9 +1,12 @@
 import * as React from 'react'
 import { HeadContent, Scripts, createRootRoute, Outlet, Link, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { TanStackDevtools } from '@tanstack/react-devtools'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ToastProvider } from '../components/ui/ToastProvider'
 import appCss from '../styles.css?url'
 import { LayoutDashboard, ReceiptText, Wallet, Menu, Bell, Search, Settings, PanelLeftClose, PanelLeft, Zap, Loader2 } from 'lucide-react'
+
+const queryClient = new QueryClient()
 
 export const Route = createRootRoute({
   head: () => ({
@@ -13,6 +16,7 @@ export const Route = createRootRoute({
       { title: 'FinStart | Premium Dashboard' },
     ],
     links: [
+      { rel: 'icon', href: '/logo.jpg' },
       { rel: 'stylesheet', href: appCss },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap' }
     ],
@@ -50,7 +54,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-['Outfit'] antialiased text-gray-200 bg-gradient-to-br from-[#050505] to-[#0a0f16] min-h-screen selection:bg-emerald-500/30">
-        
+        <QueryClientProvider client={queryClient}>
+        <ToastProvider>
         {/* Global Top Loading Bar */}
         {(isLoading || isFetching) && (
           <div className="fixed top-0 left-0 w-full h-1 z-[100] bg-[#050505]">
@@ -85,7 +90,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
               <div className="flex-1 lg:hidden">
                 <a className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                  <Wallet className="w-6 h-6 text-emerald-500" /> FinStart
+                  <div className="w-8 h-8 rounded-lg overflow-hidden">
+                    <img src="/logo.jpg" alt="FinStart" className="w-full h-full object-cover" />
+                  </div>
+                  FinStart
                 </a>
               </div>
               
@@ -150,8 +158,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label> 
             <aside className={`${isSidebarCollapsed ? 'w-24' : 'w-72'} min-h-full bg-[#07090c]/95 backdrop-blur-3xl border-r border-white/5 flex flex-col shadow-2xl transition-all duration-300 ease-in-out overflow-hidden`}>
               <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'px-8'} h-20 border-b border-white/5 transition-all duration-300`}>
-                <div className={`rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/20 flex-shrink-0 transition-all duration-300 ${isSidebarCollapsed ? 'w-12 h-12' : 'w-10 h-10 mr-3'}`}>
-                  <Wallet className={`${isSidebarCollapsed ? 'w-6 h-6' : 'w-5 h-5'} text-white`} />
+                <div className={`rounded-xl overflow-hidden shadow-lg shadow-emerald-500/20 flex-shrink-0 transition-all duration-300 ${isSidebarCollapsed ? 'w-12 h-12' : 'w-10 h-10 mr-3'}`}>
+                  <img src="/logo.jpg" alt="FinStart" className="w-full h-full object-cover" />
                 </div>
                 <div className={`overflow-hidden whitespace-nowrap transition-all duration-300 ${isSidebarCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}`}>
                   <span className="font-bold text-2xl tracking-tight text-white">Fin<span className="text-emerald-500">Start</span></span>
@@ -180,29 +188,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
                 </li>
               </ul>
 
-              {/* Upgrade Plan Widget */}
-              <div className="mt-auto transition-all duration-300 overflow-hidden">
-                {!isSidebarCollapsed ? (
-                  <div className="p-6 m-4 bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-2xl relative group hover:border-emerald-500/30 transition-colors cursor-pointer">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -mr-16 -mt-16 transition-all group-hover:bg-emerald-500/30 duration-700"></div>
-                    <h4 className="font-bold text-white mb-2 relative z-10">Pro Plan</h4>
-                    <p className="text-xs text-gray-400 mb-4 relative z-10 whitespace-normal">Unlock all premium analytics & limits.</p>
-                    <button className="btn btn-sm btn-block border-none bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-black transition-colors relative z-10 font-bold">Upgrade</button>
-                  </div>
-                ) : (
-                  <div className="m-4 mb-6 flex justify-center">
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-900 to-black border border-white/10 flex items-center justify-center text-emerald-400 hover:text-white hover:bg-emerald-500/20 cursor-pointer shadow-lg hover:shadow-emerald-500/20 transition-all" title="Upgrade to Pro">
-                      <Zap className="w-6 h-6 fill-emerald-500/20" />
-                    </div>
-                  </div>
-                )}
-              </div>
+
             </aside>
           </div>
         </div>
         <Scripts />
+        </ToastProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )
 }
-
